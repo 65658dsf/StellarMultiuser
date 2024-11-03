@@ -16,7 +16,6 @@
 StellarMultiuser/
 ├── app.py               # 主程序文件，定义了 Quart 应用和路由
 ├── README.md            # 项目说明文档
-└── database.json        # 数据库配置文件
 ```
 
 ## 📦 安装步骤
@@ -25,7 +24,7 @@ StellarMultiuser/
 
 ### 2. 安装依赖
 
-确保系统已安装 Python 3.7+，然后运行以下命令安装依赖：
+确保系统已安装 Python 3.7+
 
 
 ### 3. 数据库配置
