@@ -1,4 +1,3 @@
-```markdown
 # StellarMultiuser
 
 **StellarMultiuser** 是一款基于 **FRPS** 的 Python 用户鉴权系统。该系统允许通过不同权限组的校验、隧道有效性检测以及 VIP 用户检查等功能，方便地管理和保护用户访问。
