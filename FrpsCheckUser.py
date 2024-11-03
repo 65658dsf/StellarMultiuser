@@ -25,8 +25,8 @@ def rc4_encrypt(data, key1):
     return res.decode("utf-8")
 
 # 生成 token
-def generate_token(password):
-    encrypted = rc4_encrypt(password, "密钥")
+def generate_token(token):
+    encrypted = rc4_encrypt(token, "密钥")
     return hashlib.md5(encrypted.encode()).hexdigest()
 
 class OpController:
@@ -37,11 +37,11 @@ class OpController:
         app.add_url_rule("/free", view_func=self.handle_login, methods=["POST"])
         app.add_url_rule("/check_proxy", view_func=self.check_proxy, methods=["POST"])
         app.add_url_rule("/vip", view_func=self.vip_check, methods=["POST"])  # 新增路由
-    def get_user_password(self, user):
+    def get_user_token(self, user):
         try:
             connection = pymysql.connect(**db_config)
             with connection.cursor() as cursor:
-                sql = "SELECT password FROM users WHERE username = %s"
+                sql = "SELECT token FROM users WHERE username = %s"
                 cursor.execute(sql, (user,))
                 result = cursor.fetchone()
                 if result:
@@ -73,13 +73,13 @@ class OpController:
         if not user or not token:
             return jsonify({"reject": True, "reject_reason": "用户名或密码不能为空"})
 
-        # 从数据库获取用户的密码
-        db_password = self.get_user_password(user)
-        if not db_password:
+        # 从数据库获取用户的token
+        db_token = self.get_user_token(user)
+        if not db_token:
             return jsonify({"reject": True, "reject_reason": "用户不存在"})
 
         # 使用数据库密码生成 token
-        generated_token = generate_token(db_password)
+        generated_token = generate_token(db_token)
 
         # 验证 token 是否正确
         if generated_token == token:
